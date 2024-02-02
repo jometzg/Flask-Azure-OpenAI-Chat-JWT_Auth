@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from functools import wraps
 import jwt_validator
-from InvalidAuth import InvalidAuth
+from custom_auth_handler import AuthHandler
 import open_ai_chat_completion
 
 # MSAL Configuration Expires 30/04/2024
@@ -15,7 +15,7 @@ decoded_token  = None
 # Error handler
 
 
-@app.errorhandler(InvalidAuth)
+@app.errorhandler(AuthHandler)
 def handle_auth_error(e):
     """
     Error handler for AuthError exceptions.
@@ -33,15 +33,15 @@ def get_auth_token_header() -> str:
 
         parts = token.split()
         if parts[0].lower() != "bearer":
-            raise InvalidAuth({"code": "invalid_header",
+            raise AuthHandler({"code": "invalid_header",
                             "description":
                                 "Authorization header must start with"
                                 " Bearer"}, 401)
         elif len(parts) == 1:
-            raise InvalidAuth({"code": "invalid_header",
+            raise AuthHandler({"code": "invalid_header",
                             "description": "Token not found"}, 401)
         elif len(parts) > 2:
-            raise InvalidAuth({"code": "invalid_header",
+            raise AuthHandler({"code": "invalid_header",
                             "description":
                                 "Authorization header must be"
                                 " Bearer token"}, 401)
@@ -79,5 +79,5 @@ def send_message():
 
 
 if __name__ == '__main__':
-    app.register_error_handler(InvalidAuth, handle_auth_error)
+    app.register_error_handler(AuthHandler, handle_auth_error)
     app.run(debug=True)

@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives import serialization #serialization  to conv
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers #numbers that make up an RSA public key, specifically the modulus (n) and the public exponent (e).
 import base64
 import requests
-import InvalidAuth
+from custom_auth_handler import AuthHandler
 
 
 
@@ -70,20 +70,20 @@ def validate_jwt(token):
 
     
     except jwt.ExpiredSignatureError:
-                raise InvalidAuth({"code": "token_expired",
+                raise AuthHandler({"code": "token_expired",
                                 "description": "token is expired"}, 401)
     except jwt.InvalidAudienceError:
-        raise InvalidAuth({"code": "invalid_claims",
+        raise AuthHandler({"code": "invalid_claims",
                         "description":
                             "incorrect claims,"
                             "please check the audience and issuer"}, 401)
     except jwt.InvalidIssuerError:
-        raise InvalidAuth({"code": "invalid_claims",
+        raise AuthHandler({"code": "invalid_claims",
                         "description":
                             "incorrect issuer,"
                             "please check the audience and issuer"}, 401)
     except Exception:
-        raise InvalidAuth({"code": "invalid_header",
+        raise AuthHandler({"code": "invalid_header",
                         "description":
                             "Unable to parse authentication"
                             " token."}, 401)

@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-class InvalidAuth(Exception):
+class AuthHandler(Exception):
     """
     Custom exception class for authentication errors.
     """
