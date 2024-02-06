@@ -6,14 +6,18 @@ import base64
 import requests
 from custom_auth_handler import AuthHandler
 
+from dotenv import load_dotenv
+import os
 
+# Load the environment variables from .env.local file
+load_dotenv(dotenv_path='.env.local')
 
+# Load the environment variables from .env.local file
+ISSUER = os.getenv('ISSUER')
+AUDIENCE = os.getenv('AUDIENCE')
+JWKS_URI = os.getenv('JWKS_URI')
 
-
-ISSUER = ""
-AUDIENCE = ""
-JWKS_URI = ""
-BEARER_TOKEN = ""
+print( ISSUER, AUDIENCE, JWKS_URI)
 
 
 # Function to decode the Base64-URL encoded strings
@@ -71,7 +75,7 @@ def validate_jwt(token):
 
     #verify the JWT
     try:
-        decoded = jwt.decode(BEARER_TOKEN, pem, algorithms=["RS256"], audience=AUDIENCE, issuer=ISSUER, options={"verify_signature": True})        
+        decoded = jwt.decode(token, pem, algorithms=["RS256"], audience=AUDIENCE, issuer=ISSUER, options={"verify_signature": True})        
 
     
     except jwt.ExpiredSignatureError:

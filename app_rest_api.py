@@ -8,7 +8,7 @@ import open_ai_chat_completion
 
 # MSAL Configuration Expires 30/04/2024
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/send*": {"origins": "http://localhost:4200"}})
 
 decoded_token  = None
 
@@ -56,7 +56,7 @@ def validate_jwt_request_(f):
     def decorator(*args, **kwargs):
         token = get_auth_token_header()
         decoded_token = jwt_validator.validate_jwt(token)
-        print(decoded_token)
+        return f(decoded_token,*args, **kwargs)
     
     return decorator
 
@@ -65,7 +65,8 @@ def validate_jwt_request_(f):
 
 @app.route('/send', methods=['get'])
 @validate_jwt_request_
-def send_message():
+def send_message(token: str):
+    print(token)
     """ Endpoint to receive user messages and start streaming responses. """
     user_message = request.args.get("message")
     print(user_message + "\n")
@@ -74,8 +75,9 @@ def send_message():
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
-    response = open_ai_chat_completion.generate_response(user_message)
-    return jsonify({"response": response})
+    #response = open_ai_chat_completion.generate_response(user_message)
+    #return jsonify({"response": response})
+    return jsonify({"response": "User Auth and called endpoint"})
 
 
 

@@ -2,16 +2,24 @@ import markdown
 from openai import AzureOpenAI
 import json
 
-# Replace with your Azure OpenAI credentials
-azure_api_key = ""
-azure_endpoint = ""
-api_verison = ""
-model = ""
+from dotenv import load_dotenv
+import os
+
+# Load the environment variables from .env.local file
+load_dotenv(dotenv_path='.env.local')
+
+
+# Access the variables using os.getenv
+azure_api_key = os.getenv('azure_api_key')
+azure_endpoint = os.getenv('azure_endpoint')
+model = os.getenv('model')
+api_version = os.getenv('api_verison')  # Note: there's a typo in 'api_verison'. It should be 'api_version'.
+
 # Initialize Azure OpenAI client
 client = AzureOpenAI(
     api_key=azure_api_key,
     azure_endpoint=azure_endpoint,
-    api_version=api_verison
+    api_version=api_version
 )
 
 
