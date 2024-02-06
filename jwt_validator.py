@@ -40,9 +40,14 @@ def fetch_public_key(unverified_header):
 
 #function that gets the unverified header from the bearer token
 def get_unverified_header(bearer_token):
-    #decoded_token = jwt.decode(bearer_token, algorithms=["RS256"], verify=False)
-    #return decoded_token
-    return jwt.get_unverified_header(bearer_token)
+    try:
+        return jwt.get_unverified_header(bearer_token)
+    # If the token is in an invalid format, raise an error
+    except jwt.DecodeError:
+        raise AuthHandler({"code": "invalid_header",
+                        "description":
+                            "Unable to parse authentication"
+                            " token."}, 401)
 
 #function that validates the bearer token
 def validate_jwt(token):    

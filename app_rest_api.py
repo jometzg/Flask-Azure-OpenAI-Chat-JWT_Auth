@@ -51,19 +51,20 @@ def get_auth_token_header() -> str:
 
 
 
-# def validate_jwt_request_(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         token = get_auth_token_header()
-#         decoded_token = jwt_validator.validate_jwt(token)
-        
-#     return f(*args, **kwargs)
+def validate_jwt_request_(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        token = get_auth_token_header()
+        decoded_token = jwt_validator.validate_jwt(token)
+        print(decoded_token)
+    
+    return decorator
 
 
 
 
 @app.route('/send', methods=['get'])
-#@validate_jwt_request_
+@validate_jwt_request_
 def send_message():
     """ Endpoint to receive user messages and start streaming responses. """
     user_message = request.args.get("message")
