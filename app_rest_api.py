@@ -77,7 +77,8 @@ def send_message(token: str):
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
-    return Response(open_ai_streaming_completions.generate_streaming_response(user_message), content_type='text/event-stream')
+    #return Response(open_ai_streaming_completions.generate_streaming_response(user_message), content_type='text/event-stream')
+    return jsonify("Hello World")
 
 
 
