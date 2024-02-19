@@ -54,7 +54,6 @@ def get_unverified_header(bearer_token):
 #function that validates the bearer token
 def validate_jwt(token):    
     unverified_header = get_unverified_header(token)
-    print(unverified_header)
     match_key = fetch_public_key(unverified_header)
     n = match_key["n"]
     e = match_key["e"]

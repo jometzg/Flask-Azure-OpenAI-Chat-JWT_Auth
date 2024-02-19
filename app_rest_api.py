@@ -27,7 +27,7 @@ def handle_auth_error(e):
 
 
 def get_auth_token_header() -> str:
-        token = request.args.get('Authorization')  # Get the token from the header
+        token = request.args.get('Authorization')  # Get the token from the query string
         bearer_token = f"bearer {token}"
         if not bearer_token:
             return jsonify({"error": "No token provided"}), 401
