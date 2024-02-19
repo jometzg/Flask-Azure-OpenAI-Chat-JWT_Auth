@@ -83,4 +83,4 @@ def send_message(token: str):
 
 if __name__ == '__main__':
     app.register_error_handler(AuthHandler, handle_auth_error)
-    app.run(debug=True)
+    app.run()
