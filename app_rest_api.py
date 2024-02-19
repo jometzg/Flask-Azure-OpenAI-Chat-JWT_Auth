@@ -4,7 +4,7 @@ from flask_cors import CORS
 from functools import wraps
 import jwt_validator
 from custom_auth_handler import AuthHandler
-import open_ai_chat_completion
+import openai_completions as open_ai_streaming_completions
 
 # MSAL Configuration Expires 30/04/2024
 app = Flask(__name__)
@@ -67,18 +67,17 @@ def validate_jwt_request_(f):
 @app.route('/openai', methods=['get'])
 @validate_jwt_request_
 def send_message(token: str):
-    print(token)
     """ Endpoint to receive user messages and start streaming responses. """
     user_message = request.args.get("message")
-    print(user_message + "\n")
-
+    
+    #I can do more stuff with the token should I wish to. Right now, I don't need to
+    #The validator is checking for the scope and audience of the token
+    #This is there in future to enable more functionality via authz for specific users
     # Ensure message is not empty
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
-    #response = open_ai_chat_completion.generate_response(user_message)
-    #return jsonify({"response": response})
-    return jsonify({"response": "User Auth and called endpoint"})
+    return Response(open_ai_streaming_completions.generate_streaming_response(user_message), content_type='text/event-stream')
 
 
 
