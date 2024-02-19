@@ -77,10 +77,13 @@ def send_message(token: str):
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
-    #return Response(open_ai_streaming_completions.generate_streaming_response(user_message), content_type='text/event-stream')
-    return jsonify("Hello World")
+    return Response(open_ai_streaming_completions.generate_streaming_response(user_message), content_type='text/event-stream')
 
 
+#health check endpoint
+@app.route('/health', methods=['get'])
+def health_check():
+    return jsonify({"status": "healthy"})
 
 if __name__ == '__main__':
     app.register_error_handler(AuthHandler, handle_auth_error)
