@@ -8,7 +8,7 @@ import open_ai_chat_completion
 
 # MSAL Configuration Expires 30/04/2024
 app = Flask(__name__)
-CORS(app, resources={r"/send*": {"origins": "http://localhost:4200"}})
+CORS(app, resources={r"/openai*": {"origins": "http://localhost:4200"}})
 
 decoded_token  = None
 
@@ -27,11 +27,12 @@ def handle_auth_error(e):
 
 
 def get_auth_token_header() -> str:
-        token = request.headers.get('Authorization')  # Get the token from the header
-        if not token:
+        token = request.args.get('Authorization')  # Get the token from the header
+        bearer_token = f"bearer {token}"
+        if not bearer_token:
             return jsonify({"error": "No token provided"}), 401
 
-        parts = token.split()
+        parts = bearer_token.split()
         if parts[0].lower() != "bearer":
             raise AuthHandler({"code": "invalid_header",
                             "description":
@@ -63,7 +64,7 @@ def validate_jwt_request_(f):
 
 
 
-@app.route('/send', methods=['get'])
+@app.route('/openai', methods=['get'])
 @validate_jwt_request_
 def send_message(token: str):
     print(token)

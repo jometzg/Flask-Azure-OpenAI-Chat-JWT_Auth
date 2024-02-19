@@ -17,8 +17,6 @@ ISSUER = os.getenv('ISSUER')
 AUDIENCE = os.getenv('AUDIENCE')
 JWKS_URI = os.getenv('JWKS_URI')
 
-print( ISSUER, AUDIENCE, JWKS_URI)
-
 
 # Function to decode the Base64-URL encoded strings
 def base64url_decode(input):
@@ -56,6 +54,7 @@ def get_unverified_header(bearer_token):
 #function that validates the bearer token
 def validate_jwt(token):    
     unverified_header = get_unverified_header(token)
+    print(unverified_header)
     match_key = fetch_public_key(unverified_header)
     n = match_key["n"]
     e = match_key["e"]
