@@ -6,11 +6,11 @@ import base64
 import requests
 from custom_auth_handler import AuthHandler
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 
 # Load the environment variables from .env.local file
-load_dotenv(dotenv_path='.env.local')
+#load_dotenv(dotenv_path='.env.local')
 
 # Load the environment variables from .env.local file
 ISSUER = os.getenv('ISSUER')
