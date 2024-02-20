@@ -64,6 +64,9 @@ def validate_jwt_request_(f):
 
 
 
+
+
+
 @app.route('/openai', methods=['get'])
 @validate_jwt_request_
 def send_message(token: str):
@@ -84,6 +87,8 @@ def send_message(token: str):
 @app.route('/health', methods=['get'])
 def health_check():
     return jsonify({"status": "healthy"})
+
+
 
 if __name__ == '__main__':
     app.register_error_handler(AuthHandler, handle_auth_error)
