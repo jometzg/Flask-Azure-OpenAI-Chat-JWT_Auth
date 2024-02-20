@@ -13,13 +13,13 @@ load_dotenv(dotenv_path='.env.local')
 azure_api_key = os.getenv('azure_api_key')
 azure_endpoint = os.getenv('azure_endpoint')
 model = os.getenv('model')
-api_version = os.getenv('api_verison')  # Note: there's a typo in 'api_verison'. It should be 'api_version'.
+apiVersion = os.getenv('apiVersion')  # Corrected typo
 
 # Initialize Azure OpenAI client
 client = AzureOpenAI(
     api_key=azure_api_key,
     azure_endpoint=azure_endpoint,
-    api_version=api_version
+    api_version=apiVersion
 )
 
 

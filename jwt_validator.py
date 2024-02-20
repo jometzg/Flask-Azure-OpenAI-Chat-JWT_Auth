@@ -17,8 +17,6 @@ ISSUER = os.getenv('ISSUER')
 AUDIENCE = os.getenv('AUDIENCE')
 JWKS_URI = os.getenv('JWKS_URI')
 
-print( ISSUER, AUDIENCE, JWKS_URI)
-
 
 # Function to decode the Base64-URL encoded strings
 def base64url_decode(input):
@@ -40,7 +38,9 @@ def fetch_public_key(unverified_header):
         #public_key = RSAAlgorithm.from_jwk(json.dumps(matched_key))  # Create a public key object from the matched key
         return matched_key
     else:
-        raise Exception("No key found matching the kid in the JWKS")
+        raise AuthHandler({"code": "Key Not Found",
+                        "description":
+                            "No key found matching the kid in the JWKS"}, 401)
 
 #function that gets the unverified header from the bearer token
 def get_unverified_header(bearer_token):
