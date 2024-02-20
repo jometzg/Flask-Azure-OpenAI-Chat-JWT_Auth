@@ -2,11 +2,11 @@ import markdown
 from openai import AzureOpenAI
 import json
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 
 # Load the environment variables from .env.local file
-load_dotenv(dotenv_path='.env.local')
+#load_dotenv(dotenv_path='.env.local')
 
 
 # Access the variables using os.getenv
