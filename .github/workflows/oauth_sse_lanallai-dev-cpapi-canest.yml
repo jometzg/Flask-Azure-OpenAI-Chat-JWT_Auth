@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - lanallai-dev-cpapi-canest
 on:
   push:
     branches:
-      - oauth_sse
+      - main
   workflow_dispatch:
 
 jobs:
