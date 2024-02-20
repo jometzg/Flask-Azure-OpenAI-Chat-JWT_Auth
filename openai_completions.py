@@ -1,10 +1,10 @@
 import openai
 from openai import AzureOpenAI
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 
 # Load the environment variables from .env.local file
-load_dotenv(dotenv_path='.env.local')
+#load_dotenv(dotenv_path='.env.local')
 
 # Access the variables using os.getenv
 azure_api_key = os.getenv('azure_api_key')
